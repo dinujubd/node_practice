@@ -1,24 +1,35 @@
 const { spawn } = require('child_process')
 const { chown } = require('fs')
 
-const child = spawn('find', ['.', '-type', 'f'])
+//const child = spawn('find', ['.', '-type', 'f'])
 
-const wc_child = spawn('wc', ['-l'])
+// const child = spawn('find', ['.', '-type', 'f'], {
+//     stdio: 'inherit'
+// })
 
-process.stdin.pipe(wc_child.stdin)
-
-wc_child.stdout.on('data', data => {
-    console.log(`WC: ${data}\n`)
+const child = spawn('find', ['.', '-type', 'f'], {
+    stdio: 'inherit',
+    shell: true
 })
 
-child.stdout.on('data', (data) => {
-    console.log(`Data: ${data}`)
-})
+// child.unref();
 
-child.stderr.on('data', (err) => {
-    console.log(`Error: ${err}`)
-})
+// const wc_child = spawn('wc', ['-l'])
 
-child.on('exit', (code, signal) => {
-    console.log(`child process exited with code: ${code} and signal: ${signal}`)
-})
+// process.stdin.pipe(wc_child.stdin)
+
+// wc_child.stdout.on('data', data => {
+//     console.log(`WC: ${data}\n`)
+// })
+
+// child.stdout.on('data', (data) => {
+//     console.log(`Data: ${data}`)
+// })
+
+// child.stderr.on('data', (err) => {
+//     console.log(`Error: ${err}`)
+// })
+
+// child.on('exit', (code, signal) => {
+//     console.log(`child process exited with code: ${code} and signal: ${signal}`)
+// })
