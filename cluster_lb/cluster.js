@@ -1,4 +1,5 @@
-const cluster = require('cluster')
+const cluster = require('cluster');
+const { ClientRequest } = require('http');
 const os = require('os')
 
 if (cluster.isMaster) {
@@ -10,6 +11,12 @@ if (cluster.isMaster) {
 
     Object.values(cluster.workers).forEach(w => {
         w.send(`Hi, worker ${w.id}`)
+    })
+
+    cluster.on('exit', (w, c, s) => {
+        if (code !== 0 && !w.exitedAfterDisconnect) {
+            cluster.fork()
+        }
     })
 } else {
     require('./server')
