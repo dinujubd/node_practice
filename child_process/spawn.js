@@ -3,7 +3,7 @@ const { chown } = require('fs')
 
 const child = spawn('find', ['.', '-type', 'f'])
 
-const wc_child = spawn('wc')
+const wc_child = spawn('wc', ['-l'])
 
 process.stdin.pipe(wc_child.stdin)
 
